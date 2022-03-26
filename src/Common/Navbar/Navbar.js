@@ -22,6 +22,7 @@ import {
   Forum,
   Handshake,
   QuestionMark,
+  Home,
 } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import { UserContext } from "../../Context/userContext";
@@ -47,7 +48,6 @@ const Navbar = () => {
   const { localUser, setLocalUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [openDrawer, setOpenDrawer] = useState(false);
-
 
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);
@@ -77,9 +77,24 @@ const Navbar = () => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              NAME??
-            </Typography>
+            <IconButton
+              size={'large'}
+              edge="start"
+              color="inherit"
+              aria-label="home"
+              sx={{ ml: 0 }}
+              onClick={() => {
+                navigate("/", { replace: true });
+              }}
+            >
+              <Home fontSize="28" />
+            </IconButton>
+            {/* <Button variant="text" onClick={() => {navigate("/", {replace: true})}}>
+              <Typography variant="h6" component="div">
+                NAME??
+              </Typography>
+            </Button> */}
+            <Typography sx={{ flexGrow: 1 }}></Typography>
             {localUser && (
               <Button color="inherit" onClick={() => logOut()}>
                 Log Out
@@ -103,30 +118,32 @@ const Navbar = () => {
           <Toolbar />
           <Box sx={{ overflow: "auto" }}>
             <List>
-              {["Account", "Communities", "Initiatives", "About"].map((text) => (
-                <Link
-                  to={`/${text.toLowerCase()}`}
-                  key={text}
-                  onClick={() => toggleDrawer()}
-                >
-                  <ListItem button>
-                    <ListItemIcon sx={{ color: "black" }}>
-                      {text === "Account" && <Account />}
-                      {text === "Communities" && <Forum />}
-                      {text === "Initiatives" && <Handshake />}
-                      {text === "About" && <QuestionMark />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                </Link>
-              ))}
+              {["Account", "Communities", "Initiatives", "About"].map(
+                (text) => (
+                  <Link
+                    to={`/${text.toLowerCase()}`}
+                    key={text}
+                    onClick={() => toggleDrawer()}
+                  >
+                    <ListItem button>
+                      <ListItemIcon sx={{ color: "black" }}>
+                        {text === "Account" && <Account />}
+                        {text === "Communities" && <Forum />}
+                        {text === "Initiatives" && <Handshake />}
+                        {text === "About" && <QuestionMark />}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  </Link>
+                )
+              )}
             </List>
             <Divider />
             <Box sx={{ flexGrow: 1 }}>
               <Typography align="center" sx={{ paddingTop: 5 }}>
                 <img
                   height={"200px"}
-                  src={process.env.PUBLIC_URL + '/recycle.png'}
+                  src={process.env.PUBLIC_URL + "/recycle.png"}
                   alt="recycleLogo"
                 />
               </Typography>
