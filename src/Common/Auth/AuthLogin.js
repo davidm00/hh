@@ -21,7 +21,7 @@ const AuthLogin = () => {
     if (user && add) {
       logIn(user).then((userLoggedIn) => {
         if (userLoggedIn) {
-          alert(
+          console.log(
             `${userLoggedIn.get("firstName")}, you successfully logged in!`
           );
         }
@@ -39,7 +39,7 @@ const AuthLogin = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log("submitted: ", e.target);
+    // console.log("submitted: ", e.target);
     setAdd(true);
   };
 

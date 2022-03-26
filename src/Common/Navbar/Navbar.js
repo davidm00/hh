@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
-import Parse from "parse/lib/browser/Parse";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
@@ -15,10 +14,9 @@ import {
   ListItemText,
   ListItemIcon,
   Drawer,
+  Avatar,
 } from "@mui/material";
 import {
-  ArrowBack,
-  ManageAccounts as Account,
   Forum,
   Handshake,
   QuestionMark,
@@ -45,17 +43,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
   const classes = useStyles();
-  const { localUser, setLocalUser } = useContext(UserContext);
+  const { localUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [openDrawer, setOpenDrawer] = useState(false);
+  const location = useLocation();
 
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);
-  };
-
-  const logOut = () => {
-    Parse.User.logOut();
-    setLocalUser(null);
   };
 
   return (
@@ -77,27 +71,38 @@ const Navbar = () => {
             >
               <MenuIcon />
             </IconButton>
-            <IconButton
-              size={'large'}
-              edge="start"
-              color="inherit"
-              aria-label="home"
-              sx={{ ml: 0 }}
-              onClick={() => {
-                navigate("/", { replace: true });
-              }}
+            <Button
+            disableElevation
+              variant="text"
+              onClick={() => navigate("/", { replace: true })}
+              startIcon={<Home />}
             >
-              <Home fontSize="28" />
-            </IconButton>
-            {/* <Button variant="text" onClick={() => {navigate("/", {replace: true})}}>
-              <Typography variant="h6" component="div">
-                NAME??
-              </Typography>
-            </Button> */}
+              EcoSource
+            </Button>
             <Typography sx={{ flexGrow: 1 }}></Typography>
             {localUser && (
-              <Button color="inherit" onClick={() => logOut()}>
-                Log Out
+              <IconButton
+                size={"large"}
+                edge="start"
+                color="inherit"
+                aria-label="home"
+                onClick={() => navigate("/account", { replace: true })}
+              >
+                <Avatar sx={{bgcolor: 'text.primary', color: 'text.secondary'}}>{`${localUser.attributes.firstName.charAt(0)}${localUser.attributes.lastName.charAt(0)}`}</Avatar>
+              </IconButton>
+            )}
+            {!localUser && (
+              <Button
+                sx={{
+                  visibility:
+                    (location.pathname === "/login" ||
+                      location.pathname === "/register") &&
+                    "hidden",
+                }}
+                color="inherit"
+                onClick={() => navigate("/login", { replace: true })}
+              >
+                Login
               </Button>
             )}
           </Toolbar>
@@ -118,25 +123,22 @@ const Navbar = () => {
           <Toolbar />
           <Box sx={{ overflow: "auto" }}>
             <List>
-              {["Account", "Communities", "Initiatives", "About"].map(
-                (text) => (
-                  <Link
-                    to={`/${text.toLowerCase()}`}
-                    key={text}
-                    onClick={() => toggleDrawer()}
-                  >
-                    <ListItem button>
-                      <ListItemIcon sx={{ color: "black" }}>
-                        {text === "Account" && <Account />}
-                        {text === "Communities" && <Forum />}
-                        {text === "Initiatives" && <Handshake />}
-                        {text === "About" && <QuestionMark />}
-                      </ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  </Link>
-                )
-              )}
+              {["Communities", "Initiatives", "About"].map((text) => (
+                <Link
+                  to={`/${text.toLowerCase()}`}
+                  key={text}
+                  onClick={() => toggleDrawer()}
+                >
+                  <ListItem button>
+                    <ListItemIcon sx={{ color: "black" }}>
+                      {text === "Communities" && <Forum />}
+                      {text === "Initiatives" && <Handshake />}
+                      {text === "About" && <QuestionMark />}
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItem>
+                </Link>
+              ))}
             </List>
             <Divider />
             <Box sx={{ flexGrow: 1 }}>
@@ -151,20 +153,6 @@ const Navbar = () => {
           </Box>
         </Drawer>
       </Box>
-      {/* <Button
-        sx={{
-          top: 65,
-          left: 0,
-          marginBottom: 2.5,
-          visibility:
-            (location.pathname === "/") &&
-            "hidden",
-        }}
-        onClick={() => navigate(-1)}
-        color="inherit"
-      >
-        <ArrowBack /> Back
-      </Button> */}
     </Box>
   );
 };

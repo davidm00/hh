@@ -23,7 +23,7 @@ const AuthRegister = () => {
     if (newUser && add) {
       createUser(newUser).then((userCreated) => {
         if (userCreated) {
-          alert(
+          console.log(
             `${userCreated.get("firstName")}, you successfully registered!`
           );
         }
@@ -41,7 +41,7 @@ const AuthRegister = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log("submitted: ", e.target);
+    // console.log("submitted: ", e.target);
     setAdd(true);
   };
 

@@ -4,10 +4,11 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Stack } from "@mui/material";
-import { text } from "../../Constants/lorem";
+import Community from "../../Components/Communities/Community";
 
-const test = ["Notre Dame Campus", "South Bend", "Elkhart"];
+const ycLabel = {
+  name: "Your Communities",
+};
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -22,7 +23,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component="span">{children}</Typography>
         </Box>
       )}
     </div>
@@ -42,8 +43,9 @@ function a11yProps(index) {
   };
 }
 
-export default function VerticalTabs() {
-  const [value, setValue] = useState(0);
+export default function VerticalTabs({ data = [] }) {
+  console.log("data: ", data);
+  const [value, setValue] = useState(1);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -57,32 +59,56 @@ export default function VerticalTabs() {
       minHeight="100vh"
       sx={{ flexGrow: 1, bgcolor: "inherit" }}
     >
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Communities"
-        sx={{ borderRight: 2, borderColor: "divider", overflow: "visible" }}
-      >
-        {test.map((name, idx) => {
+      {data.length > 1 && (
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          aria-label="Communities"
+          sx={{ borderRight: 2, borderColor: "divider", overflow: "visible" }}
+        >
+          {/* [ycLabel, ...data] */}
+          {[ycLabel, ...data].map((item, idx) => {
+            return item.name === "Your Communities" ? (
+              <Box
+                key={idx}
+                display="flex"
+                justifyContent="start"
+                alignItems="start"
+              >
+                <Typography
+                  variant="subtitle1"
+                  component="span"
+                  sx={{ pr: 2.5, pl: 2.5 }}
+                  align="center"
+                >
+                  Your Communities
+                </Typography>
+              </Box>
+            ) : (
+              <Tab
+                key={idx}
+                label={`${item.name} Community`}
+                {...a11yProps(idx)}
+              />
+            );
+          })}
+        </Tabs>
+      )}
+      {data.length > 0 &&
+        [ycLabel, ...data].map((community, idx) => {
           return (
-            <Tab key={idx} label={`${name} Community`} {...a11yProps(idx)} />
+            <TabPanel
+              sx={{ minWidth: "1000px" }}
+              key={idx + "_tab"}
+              value={value}
+              index={idx}
+            >
+              <Community data={community} idx={idx} />
+            </TabPanel>
           );
         })}
-      </Tabs>
-      {test.map((name, idx) => {
-        return (
-          <TabPanel key={idx + "_tab"} value={value} index={idx}>
-            <Stack>{name}</Stack>
-            <Box>
-              <Typography variant="body1" component="span">
-                {text.substr(0, text.length / (idx * 1.5) )}
-              </Typography>
-            </Box>
-          </TabPanel>
-        );
-      })}
     </Box>
   );
 }

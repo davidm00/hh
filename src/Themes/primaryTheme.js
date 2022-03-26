@@ -50,10 +50,10 @@ export const primaryTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          backgroundColor: pMain,
-          color: "inherit",
+          backgroundColor: pDark,
+          color: "white",
           "&:hover": {
-            backgroundColor: pLight,
+            backgroundColor: pMain,
             boxShadow: " 0 8px 16px 0 rgba(0, 0, 0, 0.2)",
           },
         },
