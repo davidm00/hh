@@ -232,7 +232,7 @@ export default function Post({ info, handleDeletePost }) {
       )}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          <pre style={{ fontFamily: "inherit" }}>{info.body}</pre>
+          <span style={{ fontFamily: "inherit" }}>{info.body}</span>
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

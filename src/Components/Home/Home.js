@@ -20,7 +20,7 @@ const Home = () => {
       justifyContent="center"
       alignItems="start"
       minHeight="100vh"
-      sx={{ padding: "5rem" }}
+      sx={{ padding: "5rem", overflow: "hidden", mb: 0, pb: 0 }}
     >
       <Stack
         direction="column"
@@ -29,7 +29,7 @@ const Home = () => {
         spacing={2}
       >
         <Typography variant="h1" component="div">
-          Home Page
+          Welcome to EcoSource
         </Typography>
         {!auth && (
           <div>
@@ -37,6 +37,15 @@ const Home = () => {
             <Button onClick={() => navigate("/register")}>Register</Button>
           </div>
         )}
+        <Box
+          display="flex"
+          justifyContent="center"b
+          alignItems="start"
+          minHeight="100vh"
+          sx={{ padding: "5rem", pb: 0, mb: 0 }}
+        >
+          <img src="https://www.freeiconspng.com/thumbs/green-png/green-leaf-png-20.png" />
+        </Box>
       </Stack>
     </Box>
   );

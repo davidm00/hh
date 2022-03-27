@@ -24,11 +24,13 @@ const AuthLogin = () => {
           console.log(
             `${userLoggedIn.get("firstName")}, you successfully logged in!`
           );
+          // TODO: redirect user to main app
+          setAdd(false);
+          setLocalUser(user)
+          navigate("/communities");
         }
-        // TODO: redirect user to main app
-        setAdd(false);
-        setLocalUser(user)
-        navigate("/communities");
+      }).catch((e) => {
+        alert('Incorrect credentials')
       });
     }
   }, [user, add, navigate, setLocalUser]);
