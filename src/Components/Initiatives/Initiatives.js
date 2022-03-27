@@ -1,18 +1,26 @@
-import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Stack,
+  Typography,
+} from "@mui/material";
+import InitiativeHelper from "./InitiativeHelper";
 
 const Initiatives = () => {
+  const [info, setInfo] = useState(null);
+  const [search, setSearch] = useState({
+    location: "x",
+    tag: "x",
+    topic: "x",
+  });
+
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="start"
-      minHeight="100vh"
-      minWidth="100vw"
-      sx={{ padding: "5rem" }}
-    >
-      <h1>Initiatives Component</h1>
-    </Box>
+    <InitiativeHelper setInfo={setInfo} info={info} search={search} setSearch={setSearch}/>
   );
 };
 

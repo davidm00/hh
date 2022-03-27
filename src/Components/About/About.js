@@ -11,7 +11,7 @@ const About = () => {
       minWidth="100vw"
       sx={{ padding: "5rem" }}
     >
-      <h1>About Component</h1>
+      <h1>The Earth</h1>
     </Box>
   );
 };

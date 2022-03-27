@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import {
   Box,
   FormControl,
@@ -7,12 +6,18 @@ import {
   Stack,
   Button,
   FilledInput,
-  Typography,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { Check } from "@mui/icons-material";
 
-const NewPostForm = ({ post, onChange, onSubmit }) => {
+const useStyles = makeStyles(() => ({
+  inputField: {
+    backgroundColor: "red",
+    padding: 100,
+  },
+}));
+
+const NewCommentForm = ({ comment, onChange, onSubmit }) => {
+  const classes = useStyles();
 
   return (
     <Box
@@ -33,21 +38,13 @@ const NewPostForm = ({ post, onChange, onSubmit }) => {
             <FilledInput
               id="filled-adornment-body"
               type={"text"}
-              value={post.body}
+              value={comment.body}
               onChange={onChange("body")}
               label="Body"
               multiline
               rows={5}
+              className={classes.inputField}
             />
-          </FormControl>
-          <FormControl sx={{ m: 1, width: "25ch" }} variant="filled">
-            <Button variant="contained" component="label">
-              <Typography variant={"body1"}>Add Image</Typography>
-              <input onChange={onChange("image")} type="file" hidden />
-              {post.image && (
-                <Check sx={{color: "secondary.light"}}/>
-              )}
-            </Button>
           </FormControl>
         </Stack>
       </form>
@@ -55,4 +52,4 @@ const NewPostForm = ({ post, onChange, onSubmit }) => {
   );
 };
 
-export default NewPostForm;
+export default NewCommentForm;

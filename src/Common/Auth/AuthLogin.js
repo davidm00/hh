@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { logIn } from "./AuthService";
 import AuthForm from "./AuthForm";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ const AuthLogin = () => {
   const [add, setAdd] = useState(false);
 
   // useEffect that run when changes are made to the state variable flags
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (user && add) {
       logIn(user).then((userLoggedIn) => {
         if (userLoggedIn) {

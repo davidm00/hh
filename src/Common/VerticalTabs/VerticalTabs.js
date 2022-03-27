@@ -5,6 +5,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Community from "../../Components/Communities/Community";
+import { Skeleton } from "@mui/material";
+import Explore from "../../Components/Communities/Explore";
 
 const ycLabel = {
   name: "Your Communities",
@@ -22,7 +24,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 1 }}>
           <Typography component="span">{children}</Typography>
         </Box>
       )}
@@ -43,7 +45,7 @@ function a11yProps(index) {
   };
 }
 
-export default function VerticalTabs({ data = [] }) {
+export default function VerticalTabs({ data = null }) {
   console.log("data: ", data);
   const [value, setValue] = useState(1);
 
@@ -54,12 +56,11 @@ export default function VerticalTabs({ data = [] }) {
   return (
     <Box
       display="flex"
-      justifyContent="start"
       alignItems="start"
       minHeight="100vh"
       sx={{ flexGrow: 1, bgcolor: "inherit" }}
     >
-      {data.length > 1 && (
+      {data && data.length >= 1 && (
         <Tabs
           orientation="vertical"
           variant="scrollable"
@@ -68,7 +69,6 @@ export default function VerticalTabs({ data = [] }) {
           aria-label="Communities"
           sx={{ borderRight: 2, borderColor: "divider", overflow: "visible" }}
         >
-          {/* [ycLabel, ...data] */}
           {[ycLabel, ...data].map((item, idx) => {
             return item.name === "Your Communities" ? (
               <Box
@@ -94,8 +94,13 @@ export default function VerticalTabs({ data = [] }) {
               />
             );
           })}
+          <Tab
+            label={`Communities`}
+            {...a11yProps([ycLabel, ...data].length)}
+          />
         </Tabs>
       )}
+      {!data && <Skeleton variant="rectangular" width={210} height={118} />}
       {data.length > 0 &&
         [ycLabel, ...data].map((community, idx) => {
           return (
@@ -109,6 +114,13 @@ export default function VerticalTabs({ data = [] }) {
             </TabPanel>
           );
         })}
+      <TabPanel
+        sx={{ minWidth: "1000px" }}
+        value={value}
+        index={[ycLabel, ...data].length}
+      >
+        <Explore />
+      </TabPanel>
     </Box>
   );
 }

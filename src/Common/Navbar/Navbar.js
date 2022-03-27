@@ -80,7 +80,7 @@ const Navbar = () => {
               EcoSource
             </Button>
             <Typography sx={{ flexGrow: 1 }}></Typography>
-            {localUser && (
+            {localUser && localUser.attributes && (
               <IconButton
                 size={"large"}
                 edge="start"

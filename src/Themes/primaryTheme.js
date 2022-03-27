@@ -44,6 +44,7 @@ export const primaryTheme = createTheme({
     },
     background: {
       default: background,
+      paper: sMain,
     },
   },
   components: {

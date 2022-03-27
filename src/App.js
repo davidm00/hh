@@ -3,7 +3,8 @@ import * as Env from "./environment";
 import Parse from "parse";
 import RoutesView from "./Components/RoutesView";
 import EmotionTheme from "./Common/EmotionTheme/EmotionTheme";
-import {UserContextProvider} from "./Context/userContext";
+import { UserContextProvider } from "./Context/userContext";
+import PyodideProvider from "./Context/pyodideContext";
 
 Parse.initialize(Env.APPLICATION_ID, Env.JAVASCRIPT_KEY);
 Parse.serverURL = Env.SERVER_URL;

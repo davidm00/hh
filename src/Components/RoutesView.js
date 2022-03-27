@@ -17,6 +17,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { UserContext } from "../Context/userContext";
+import SearchContextProvider from "../Context/searchContext";
 
 export default function RoutesView() {
   const { localUser } = useContext(UserContext);
@@ -28,7 +29,14 @@ export default function RoutesView() {
         <Route index path="/" element={<Home />} />
         <Route path="/login" element={<AuthLogin />} />
         <Route path="/register" element={<AuthRegister />} />
-        <Route path="/initiatives" element={<Initiatives />} />
+        <Route
+          path="/initiatives"
+          element={
+            <SearchContextProvider>
+              <Initiatives />
+            </SearchContextProvider>
+          }
+        />
         <Route path="/about" element={<About />} />
         <Route path="/communities" element={<Communities />} />
         <Route

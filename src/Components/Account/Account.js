@@ -5,10 +5,10 @@ import { UserContext } from "../../Context/userContext";
 import { useNavigate } from "react-router-dom";
 
 const Account = () => {
-  const { localUser, setLocalUser } = useContext(UserContext);
+  const { localUser, setLocalUser, localLogOut } = useContext(UserContext);
   const navigate = useNavigate();
   const logOut = () => {
-    Parse.User.logOut();
+    localLogOut();
     setLocalUser(null);
     navigate("/login", { replace: true });
   };
@@ -27,7 +27,13 @@ const Account = () => {
         alignItems="center"
         spacing={2}
       >
-        <h1>Account Component</h1>
+        <h1>Your Account</h1>
+        <Button color="inherit" disabled>
+          Favorites
+        </Button>
+        <Button color="inherit" disabled>
+          Drafts
+        </Button>
         <Button color="inherit" onClick={() => logOut()}>
           Log Out
         </Button>

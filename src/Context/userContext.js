@@ -8,16 +8,21 @@ const UserContextProvider = ({ children }) => {
   // the value that will be given to the context
   const [localUser, setLocalUser] = useState(null);
 
+  const localLogOut = () => {
+    Parse.User.logOut();
+  };
+
   useEffect(() => {
     if (Parse.User.current()) {
       setLocalUser(Parse.User.current());
     }
-  }, []);
+  }, [localLogOut]);
 
   const providerValue = useMemo(
     () => ({
       localUser,
       setLocalUser,
+      localLogOut,
     }),
     [localUser, setLocalUser]
   );
